@@ -1,0 +1,36 @@
+// This is your Prisma schema file
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = "file:./dev.db"
+}
+
+model VocabularyItem {
+  id          String   @id @default(cuid())
+  text        String
+  translation String
+  audioUrl    String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  // Learning progress records
+  progress    LearningProgress[]
+}
+
+model LearningProgress {
+  id              String         @id @default(cuid())
+  vocabularyId    String
+  vocabulary      VocabularyItem @relation(fields: [vocabularyId], references: [id])
+  status          String         // "mastered", "familiar", "forgotten"
+  reviewedAt      DateTime       @default(now())
+  nextReviewDate  DateTime
+  createdAt       DateTime       @default(now())
+  updatedAt       DateTime       @updatedAt
+
+  @@index([vocabularyId])
+  @@index([nextReviewDate])
+}
