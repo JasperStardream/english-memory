@@ -24,6 +24,7 @@ export default function ReviewPage() {
     }>;
   }>>([]);
   const [visibleItems, setVisibleItems] = useState<Set<string>>(new Set());
+  const [isLooping, setIsLooping] = useState<Set<string>>(new Set());
 
   useEffect(() => {
     const fetchDueItems = async () => {
@@ -44,6 +45,7 @@ export default function ReviewPage() {
 
   const updateStatus = async (itemId: string, status: string) => {
     try {
+      stopCurrentAudio();
       const response = await fetch(`/api/progress/${itemId}`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -67,21 +69,54 @@ export default function ReviewPage() {
   const [audioError, setAudioError] = useState<string | null>(null);
   const [isPlaying, setIsPlaying] = useState<string | null>(null);
 
+  const [currentAudio, setCurrentAudio] = useState<HTMLAudioElement | null>(null);
+
+  const stopCurrentAudio = () => {
+    if (currentAudio) {
+      currentAudio.pause();
+      currentAudio.currentTime = 0;
+      setCurrentAudio(null);
+      setIsPlaying(null);
+      setIsLooping(new Set());
+    }
+  };
+
   const playAudio = async (itemId: string, audioUrl: string) => {
     if (!audioUrl) return;
     
     try {
+      // If there's already an audio playing, stop it
+      stopCurrentAudio();
+      
+      // If we're clicking the same button that's currently playing, just stop
+      if (isPlaying === itemId) {
+        return;
+      }
+
       setAudioError(null);
       setIsPlaying(itemId);
       const audio = new Audio(audioUrl);
+      audio.loop = true;
       
-      audio.addEventListener('ended', () => setIsPlaying(null));
+      audio.addEventListener('ended', () => {
+        if (!isLooping.has(itemId)) {
+          setIsPlaying(null);
+          setCurrentAudio(null);
+        }
+      });
       audio.addEventListener('error', () => {
         setAudioError('Failed to play audio');
         setIsPlaying(null);
+        setCurrentAudio(null);
       });
       
       await audio.play();
+      setCurrentAudio(audio);
+      setIsLooping(prev => {
+        const newSet = new Set(prev);
+        newSet.add(itemId);
+        return newSet;
+      });
     } catch (error) {
       console.error('Audio playback error:', error);
       setAudioError('Failed to play audio');
@@ -119,8 +154,12 @@ export default function ReviewPage() {
                   <div className="flex items-center space-x-5">
                     {item.audioUrl && (
                       <button
-                        onClick={() => item.audioUrl && playAudio(item.id, item.audioUrl)}
-                        disabled={isPlaying === item.id}
+                        onClick={() => {
+                          if (item.audioUrl) {
+                            playAudio(item.id, item.audioUrl);
+                          }
+                        }}
+                        disabled={false}
                         aria-label={isPlaying === item.id ? "Playing..." : "Play pronunciation"}
                         className="p-2 text-gray-600 hover:text-blue-600"
                         title="Play pronunciation"
