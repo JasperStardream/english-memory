@@ -44,34 +44,34 @@ export default function StatisticsPage() {
   }
 
   return (
-    <div className="p-8">
-      <div className="max-w-4xl mx-auto space-y-8">
-        <h1 className="text-3xl font-bold">Learning Statistics</h1>
+    <div className="p-4 sm:p-8">
+      <div className="max-w-4xl mx-auto space-y-6 sm:space-y-8">
+        <h1 className="text-2xl sm:text-3xl font-bold">Learning Statistics</h1>
 
         {/* Overview cards */}
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-          <div className="p-6 bg-white rounded-lg shadow">
-            <h3 className="text-sm font-medium text-gray-500">Total Words</h3>
-            <p className="text-2xl font-bold mt-2">{stats.totalWords}</p>
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4">
+          <div className="p-4 sm:p-6 bg-white rounded-lg shadow">
+            <h3 className="text-xs sm:text-sm font-medium text-gray-500">Total Words</h3>
+            <p className="text-xl sm:text-2xl font-bold mt-2">{stats.totalWords}</p>
           </div>
-          <div className="p-6 bg-white rounded-lg shadow">
-            <h3 className="text-sm font-medium text-gray-500">Mastered</h3>
-            <p className="text-2xl font-bold mt-2 text-green-600">{stats.masteredCount}</p>
+          <div className="p-4 sm:p-6 bg-white rounded-lg shadow">
+            <h3 className="text-xs sm:text-sm font-medium text-gray-500">Mastered</h3>
+            <p className="text-xl sm:text-2xl font-bold mt-2 text-green-600">{stats.masteredCount}</p>
           </div>
-          <div className="p-6 bg-white rounded-lg shadow">
-            <h3 className="text-sm font-medium text-gray-500">Familiar</h3>
-            <p className="text-2xl font-bold mt-2 text-yellow-600">{stats.familiarCount}</p>
+          <div className="p-4 sm:p-6 bg-white rounded-lg shadow">
+            <h3 className="text-xs sm:text-sm font-medium text-gray-500">Familiar</h3>
+            <p className="text-xl sm:text-2xl font-bold mt-2 text-yellow-600">{stats.familiarCount}</p>
           </div>
-          <div className="p-6 bg-white rounded-lg shadow">
-            <h3 className="text-sm font-medium text-gray-500">Need Review</h3>
-            <p className="text-2xl font-bold mt-2 text-red-600">{stats.forgottenCount}</p>
+          <div className="p-4 sm:p-6 bg-white rounded-lg shadow">
+            <h3 className="text-xs sm:text-sm font-medium text-gray-500">Need Review</h3>
+            <p className="text-xl sm:text-2xl font-bold mt-2 text-red-600">{stats.forgottenCount}</p>
           </div>
         </div>
 
         {/* Progress chart */}
-        <div className="bg-white p-6 rounded-lg shadow">
-          <h2 className="text-xl font-semibold mb-4">Review History</h2>
-          <div className="h-[300px]">
+        <div className="bg-white p-4 sm:p-6 rounded-lg shadow">
+          <h2 className="text-lg sm:text-xl font-semibold mb-4">Review History</h2>
+          <div className="h-[250px] sm:h-[300px]">
             <ResponsiveContainer width="100%" height="100%">
               <BarChart data={stats.reviewHistory}>
                 <CartesianGrid strokeDasharray="3 3" />

@@ -52,13 +52,13 @@ export default function NewVocabularyPage() {
   };
 
   return (
-    <div className="p-8">
-      <div className="max-w-4xl mx-auto space-y-8">
-        <h1 className="text-3xl font-bold">Add New Vocabulary</h1>
+    <div className="p-4 sm:p-8">
+      <div className="max-w-4xl mx-auto space-y-6 sm:space-y-8">
+        <h1 className="text-2xl sm:text-3xl font-bold">Add New Vocabulary</h1>
         
         {/* Add new vocabulary form */}
-        <form onSubmit={handleSubmit(onSubmit)} className="space-y-4 p-6 bg-white rounded-lg shadow">
-          <div className="grid grid-cols-2 gap-4">
+        <form onSubmit={handleSubmit(onSubmit)} className="space-y-4 p-4 sm:p-6 bg-white rounded-lg shadow">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div>
               <label className="block text-sm font-medium mb-1">
                 Word/Phrase <span className="text-red-500">*</span>
@@ -89,7 +89,7 @@ export default function NewVocabularyPage() {
           <div>
             <label className="block text-sm font-medium mb-1">
               Pronunciation Audio <span className="text-red-500">*</span>
-              <span className="text-gray-500 text-xs ml-2">(Supported formats: MP3, WAV, OGG)</span>
+              <span className="text-gray-500 text-xs ml-2 block sm:inline">(Supported formats: MP3, WAV, OGG)</span>
             </label>
             <input
               type="file"
@@ -103,14 +103,12 @@ export default function NewVocabularyPage() {
           </div>
           <button
             type="submit"
-            className="flex items-center justify-center w-full p-2 bg-blue-600 text-white rounded hover:bg-blue-700"
+            className="flex items-center justify-center w-full p-3 bg-blue-600 text-white rounded hover:bg-blue-700"
           >
             <Plus className="w-4 h-4 mr-2" />
             Add Vocabulary
           </button>
         </form>
-
-
       </div>
     </div>
   );

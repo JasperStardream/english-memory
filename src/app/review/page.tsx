@@ -137,21 +137,21 @@ export default function ReviewPage() {
   };
 
   return (
-    <div className="p-8">
-      <div className="max-w-4xl mx-auto space-y-8">
-        <h1 className="text-3xl font-bold">Review Session</h1>
+    <div className="p-4 sm:p-8">
+      <div className="max-w-4xl mx-auto space-y-6 sm:space-y-8">
+        <h1 className="text-2xl sm:text-3xl font-bold">Review Session</h1>
         
-        <div className="space-y-4">
-          <h2 className="text-xl font-semibold">Words to Review</h2>
+        <div className="space-y-3 sm:space-y-4">
+          <h2 className="text-lg sm:text-xl font-semibold">Words to Review</h2>
           {items.map((item) => {
             const daysUntilNextReview = item.progress[0] ? getDaysUntilNextReview(item.progress[0].nextReviewDate) : 0;
             return (
               <div
                 key={item.id}
-                className="p-4 bg-white rounded-lg shadow hover:shadow-md transition-shadow"
+                className="p-3 sm:p-4 bg-white rounded-lg shadow hover:shadow-md transition-shadow"
               >
-                <div className="flex items-center justify-between">
-                  <div className="flex items-center space-x-5">
+                <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between space-y-3 sm:space-y-0">
+                  <div className="flex flex-wrap items-center gap-2 sm:gap-5">
                     {item.audioUrl && (
                       <button
                         onClick={() => {
@@ -199,13 +199,13 @@ export default function ReviewPage() {
                         <Eye className="w-5 h-5" />
                       )}
                     </button>
-                    <div className={`space-y-1 ${visibleItems.has(item.id) ? 'opacity-100' : 'opacity-0'} transition-opacity`}>
-                      <h3 className="text-lg font-medium">{item.text}</h3>
-                      <p className="text-gray-600">{item.translation}</p>
-                    </div>
                   </div>
-                  <div className="flex items-center space-x-1">
-                    <p className="text-sm text-blue-600">
+                  <div className={`space-y-1 mt-2 sm:mt-0 ${visibleItems.has(item.id) ? 'opacity-100' : 'opacity-0'} transition-opacity`}>
+                    <h3 className="text-base sm:text-lg font-medium">{item.text}</h3>
+                    <p className="text-sm sm:text-base text-gray-600">{item.translation}</p>
+                  </div>
+                  <div className="flex items-center space-x-1 mt-2 sm:mt-0">
+                    <p className="text-xs sm:text-sm text-blue-600">
                       {daysUntilNextReview} days
                     </p>
                   </div>
